@@ -204,8 +204,8 @@ def createMap():
 
     createRoad()
     tree_1(-3*s, -s)
-    # createLine()
-    # fillBoomRadom()
+    createLine()
+    fillBoomRadom()
 
 def createLine():
     s = WIDTH/24
@@ -299,21 +299,20 @@ def checking(winner):
     else:
         tt.write("YOU LOST!!!!!!", False, align= "center", font=('Arial', '50', 'normal') )
 
-# players = getNumberOfPlayers()
-# playersList = []
+players = getNumberOfPlayers()
+playersList = []
 
-# rd.shuffle(COLORS)
-# colors = COLORS[:players]
+rd.shuffle(COLORS)
+colors = COLORS[:players]
 
-# createScreen()
+createScreen()
 createMap()
-# createPlayer(colors)
+createPlayer(colors)
 
-# print(colors)
-# betting = int(input("Player which you think he can win: "))
+print(colors)
+betting = int(input("Player which you think he can win: "))
 
-# winner = move() + 1
-# checking(winner)
+winner = move() + 1
+checking(winner)
 
-tt.done()
-# time.sleep(15)
+time.sleep(15)
