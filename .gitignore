@@ -1,129 +1,319 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
+import turtle as tt
+import random as rd
+import time
+from math import sqrt
 
-# C extensions
-*.so
 
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-pip-wheel-metadata/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+LENGTH = 1200
+WIDTH = LENGTH/2
+r = LENGTH/2400
+COLORS = ['red', 'blue', 'gray', 'cyan', 'yellow', 'pink', 'brown', 'orange', 'black', 'purple']
 
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
+def getNumberOfPlayers():
+    while True:
+        players = int(input("Enter number of players(2- 10): "))
+        if 2 <= players  <=10:
+            return players
+        else:
+            print("Enter numer of players again:")
 
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
+def createScreen():
+    screen = tt.Screen()
+    screen.title("RACING!!!!")
+    screen.setup(LENGTH, WIDTH)
 
-# Translations
-*.mo
-*.pot
 
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
+def createPlayer(colors):
+    spacing = LENGTH / (len(colors)+1)
+    for i, color in enumerate(colors):
+        player = tt.Turtle()
+        player.color(color)
+        player.shape('turtle')
+        player.shapesize(1.5, 1.5, 1.5)
+        player.left(90)
+        player.up()
+        #set possition
+        player.setposition(-(LENGTH/2) +(i+1)*spacing, -(WIDTH/2)+(WIDTH/24)-10)
+        player.down()
+        playersList.append(player)
+boomList = []
 
-# Flask stuff:
-instance/
-.webassets-cache
+def createRoad():
+    s = LENGTH/12
+    road = tt.Turtle()
+    road.speed(0)
+    road.fillcolor("sienna")
+    road.pen(shown= False)
 
-# Scrapy stuff:
-.scrapy
+    road.begin_fill()
+    road.up()
+    road.setpos(-5*s, 2*s)
+    road.down()
+    road.fd(2*s)
+    road.right(90)
+    road.fd(2*s)
+    road.right(90)
+    road.fd(s/2)
+    road.left(90)
+    road.fd(s)
+    road.left(90)
+    road.fd((3/2)*s)
+    road.left(90)
+    road.fd(3*s)
+    road.right(90)
+    road.fd(3*s)
+    road.right(90)
+    road.fd(s)
+    road.left(90)
+    road.fd(s)
+    road.left(90)
+    road.fd(s/2)
+    road.right(90)
+    road.fd(s)
 
-# Sphinx documentation
-docs/_build/
+    road.left(90)
+    road.fd(s)
+    road.right(90)
+    road.fd(2*s)
+    road.right(90)
+    road.fd(s*3/2)
+    road.right(90)
+    road.fd(2*s)
+    road.left(90)
+    road.fd(s/2)
+    road.right(90)
+    road.fd(s)
+    road.left(90)
+    road.fd(s/2)
+    
+    road.right(90)
+    road.fd(s)
+    road.left(90)
+    road.fd(s)
+    road.left(90)
+    road.fd(s*2)
+    road.left(90)
+    road.fd(s/2)
+    road.right(90)
+    road.fd(2*s)
+    road.right(90)
+    road.fd(s*3/2)
+    road.right(90)
+    road.fd(5*s)
+    road.right(90)
+    road.fd(3*s)
+    road.left(90)
+    road.fd(s)
+    road.left(90)
+    road.fd(3*s)
+    road.right(90)
+    road.fd(s*7/2)
+    road.right(90)
+    road.fd(2*s)
+    road.left(90)
+    road.fd(s/2)
+    road.right(90)
+    road.fd(2*s)
+    road.end_fill()
 
-# PyBuilder
-target/
+def tree_1(x, y, t1 = "brown", t2 = "green"): 
+    s = LENGTH/(12*6)
+    tree = tt.Turtle()
+    tree.speed(0)
+    tree.pen(shown= False)
+    tree.up()
+    tree.setpos(x, y)
+    tree.down()
 
-# Jupyter Notebook
-.ipynb_checkpoints
+    tree.fillcolor(t1)
+    tree.begin_fill()
+    tree.left(90)
+    tree.fd(3*s)
+    tree.right(90)
+    tree.fd(s)
+    tree.right(90)
+    tree.fd(s)
+    tree.left(90)
+    tree.fd(s)
+    tree.left(90)
+    tree.fd(s)
+    tree.right(90)
+    tree.fd(s)
+    tree.right(90)
+    tree.fd(s)
+    tree.right(45)
+    tree.fd(s*sqrt(2))
+    tree.right(45)
+    tree.fd(s)
+    tree.left(90)
+    tree.fd(s)
+    tree.right(90)
+    tree.fd(s)
+    tree.end_fill()
 
-# IPython
-profile_default/
-ipython_config.py
+    tree.right(90)
+    tree.fd(2*s)
 
-# pyenv
-.python-version
+    tree.fillcolor(t2)
+    tree.begin_fill()
+    tree.left(90)
+    tree.fd(2*s)
+    tree.right(90)
+    for i in range(4):
+        tree.fd(s)
+        tree.right(90)
+        tree.fd(s)
+        tree.left(90)
+    tree.right(90)
+    for i in range(3):
+        tree.fd(s)
+        tree.right(90)
+        tree.fd(s)
+        tree.left(90)
+    tree.right(180)
+    tree.fd(s)
+    tree.left(90)
+    tree.fd(s)
+    tree.right(90)
+    tree.fd(s)
 
-# pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-#Pipfile.lock
+    
 
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow
-__pypackages__/
+    tree.right(90)
+    tree.fd(s)
+    tree.left(90)
+    tree.fd(s)
+    tree.left(90)
+    tree.fd(s)
+    tree.right(90)
+    tree.fd(s)
+    tree.right(90)
+    tree.fd(s)
+    tree.left(90)
+    tree.fd(s)
+    tree.left(90)
+    tree.fd(s)
+    tree.end_fill()
 
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
 
-# SageMath parsed files
-*.sage.py
+def createMap():
+    s = LENGTH/12
+    grass = tt.Screen()
+    grass.bgcolor("forest green")
 
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
+    createRoad()
+    tree_1(-3*s, -s)
+    # createLine()
+    # fillBoomRadom()
 
-# Spyder project settings
-.spyderproject
-.spyproject
+def createLine():
+    s = WIDTH/24
+    line = tt.Turtle()
+    line.pen(shown = False)
+    line.speed(0)
+    for k in range(2):
+        line.up()
+        if k==1:
+            line.setpos(-LENGTH/2, 11*s)
+            line.right(90)
+        else:
+            line.setpos(-LENGTH/2, -11*s)
+        line.down()
+        line.left(90)
 
-# Rope project settings
-.ropeproject
+        for i in range(48):
+            if i%2 == 0:
+                line.fillcolor("white")
+            else:
+                line.fillcolor("black")
+            line.begin_fill()
 
-# mkdocs documentation
-/site
+            for sqr in range(4):
+                line.fd(s)
+                if sqr == 3:
+                    line.back(s)
+                line.right(90)
+            
+            line.end_fill()
 
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
+def fillBoomRadom():
+    s = LENGTH/36
+    for i in range(20):
+        x = rd.randrange(-LENGTH/2 , LENGTH/2)
+        y = rd.randrange(-WIDTH/2 + WIDTH/20, WIDTH/2 - WIDTH/20)
+        boom = tt.Turtle()
+        boom.speed(0)
+        boom.x = x
+        boom.y = y
+        boom.up()
+        boom.setpos(x,y)
+        boom.shape("circle")
+        boom.shapesize(2*r)
+        boom.color("red")
+        boom.down()
+        boomList.append(boom)
+        
+def randomTurning(turn, obj, xP, yP):
+    if (turn == 10):
+        obj.left(turn)
+    elif (turn == 35):
+        obj.right(turn)
+    if (xP <= -LENGTH/2):
+        obj.right(turn)
+    elif (xP >= LENGTH/2):
+        obj.left(turn)
+    
+    if (yP <= -(WIDTH/2)+(WIDTH/24)-20):
+        obj.left(turn*3)
 
-# Pyre type checker
-.pyre/
+def move():
+    while True:
+        for i, players in enumerate(playersList):
+            players.speed(3)
+            step = rd.randrange(0, 5)
+            turn = rd.randint(1,40)
+            xP, yP = players.pos()
+
+            for j, boom in enumerate(boomList):
+                if ((boom.x-15*r) <= xP <= (boom.x+15*r)) and ((boom.y-15*r) <= yP <= (boom.y+15*r)):
+                    players.shape('arrow')
+                    del playersList[i]
+                    boom.color("black")
+                    boom.shapesize(4*r)
+
+            randomTurning(turn, players, xP, yP)       
+
+            players.fd(step)
+
+            if yP >= WIDTH/2 - 2*(WIDTH/24):
+                return i
+            elif len(playersList)==0:
+                return -1
+            
+def checking(winner):
+    if(winner == 0):
+        tt.write("NO ONE WIN", False, align= "center", font=('Arial', '50', 'normal') )
+    elif (betting == winner):
+        tt.write("YOU WIN!!!!!!", False, align= "center", font=('Arial', '50', 'normal') )
+    else:
+        tt.write("YOU LOST!!!!!!", False, align= "center", font=('Arial', '50', 'normal') )
+
+# players = getNumberOfPlayers()
+# playersList = []
+
+# rd.shuffle(COLORS)
+# colors = COLORS[:players]
+
+# createScreen()
+createMap()
+# createPlayer(colors)
+
+# print(colors)
+# betting = int(input("Player which you think he can win: "))
+
+# winner = move() + 1
+# checking(winner)
+
+tt.done()
+# time.sleep(15)
