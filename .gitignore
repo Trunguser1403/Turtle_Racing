@@ -327,14 +327,16 @@ def addGrassRandom():
 def addTree():
     #--------------------------
     # radom tree when you this code
-    # for i in range(5):
-    #     x = rd.randrange(-LENGTH/2 , LENGTH/2)
-    #     y = rd.randrange(-WIDTH/2 + WIDTH/20, WIDTH/2 - WIDTH/6)
-    #     drawnTree_1(x, y)
-    # for i in range(5):
-    #     x = rd.randrange(-LENGTH/2 , LENGTH/2)
-    #     y = rd.randrange(-WIDTH/2 + WIDTH/20, WIDTH/2 - WIDTH/6)
-    #     drawnTree_2(x, y)
+#     for i in range(7):
+#         x = rd.randrange(-LENGTH/2 , LENGTH/2)
+#         y = rd.randrange(-WIDTH/2 + WIDTH/20, WIDTH/2 - WIDTH/6)
+#         LENGTH_1 = rd.randrange(LENGTH-LENGTH/2, LENGTH+LENGTH/2)
+#         drawnTree_1(LENGTH_1, x, y)
+#     for i in range(7):
+#         x = rd.randrange(-LENGTH/2 , LENGTH/2)
+#         y = rd.randrange(-WIDTH/2 + WIDTH/12, WIDTH/2 - WIDTH/6)
+#         LENGTH_2 = rd.randrange(LENGTH-LENGTH/2, LENGTH+LENGTH/2)
+#         drawnTree_2(LENGTH_2, x, y)
     #---------------------
     s = LENGTH/12
     drawnTree_2(3*s, 0*s)
