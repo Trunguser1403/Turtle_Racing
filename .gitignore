@@ -29,11 +29,11 @@ def createPlayer(colors):
         player = tt.Turtle()
         player.color(color)
         player.shape('turtle')
-        player.shapesize(1.5, 1.5, 1.5)
+        player.shapesize(1)
         player.left(90)
         player.up()
         #set possition
-        player.setposition(-(LENGTH/2) +(i+1)*spacing, -(WIDTH/2)+(WIDTH/24)-10)
+        player.setposition(-(LENGTH/2) +(i+1)*spacing, -(WIDTH/2)+(WIDTH/24))
         player.down()
         playersList.append(player)
 boomList = []
@@ -367,10 +367,10 @@ def createLine():
     for k in range(2):
         line.up()
         if k==1:
-            line.setpos(-LENGTH/2, 11*s)
+            line.setpos(-LENGTH/2, WIDTH/2 - WIDTH/24)
             line.right(90)
         else:
-            line.setpos(-LENGTH/2, -11*s)
+            line.setpos(-LENGTH/2, -WIDTH/2 + WIDTH/24)
         line.down()
         line.left(90)
 
@@ -393,7 +393,7 @@ def fillBoomRadom():
     s = LENGTH/36
     for i in range(50):
         x = rd.randrange(-LENGTH/2 , LENGTH/2)
-        y = rd.randrange(-WIDTH/2 + WIDTH/20, WIDTH/2 - WIDTH/20)
+        y = rd.randrange(-WIDTH/2 + WIDTH/12, WIDTH/2 - WIDTH/12)
 
         boom = tt.Turtle()
         boom.speed(0)
@@ -426,8 +426,8 @@ def randomTurning(turn, obj, xP, yP):
     elif (xP >= LENGTH/2):
         obj.left(turn*2)
     
-    if (yP <= -(WIDTH/2)+(WIDTH/24)-20):
-        obj.left(170)
+    if yP <= -(WIDTH/2):
+        obj.left(180)
 
 def move():
     while True:
@@ -447,7 +447,7 @@ def move():
                     end.pen(shown= False)
                     end.up()
                     end.speed(0)
-                    end.setpos(xP+10, yP+10)
+                    end.setpos(xP+50*r, yP-50*r)
                     end.down()
                     end.color("red")
                     end.write("Boom\nXD", False, align= "center", font=('Arial', '10', 'normal'))
@@ -455,10 +455,11 @@ def move():
                     playersList.pop(i)
                     colors.pop(i)
                     boom.color("black")
-                    boom.shapesize(3*r) 
-                    break   
+                    boom.shapesize(2*r)
+                    boomList.pop(j)
+                    break
 
-            if yP >= WIDTH/2 - 2*(WIDTH/24):
+            if yP >= WIDTH/2 - WIDTH/24:
                 return i
             elif len(playersList)==0:
                 return -1
