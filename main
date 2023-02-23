@@ -1,0 +1,155 @@
+import turtle as tt
+import random as rd
+import time
+from map import *
+
+#########
+LENGTH = 1200
+WIDTH = LENGTH/2
+
+#create map:
+boomList = []
+def addGrass(LENGTH, WIDTH, num = 50):
+    for i in range(num):
+        x = rd.randrange(-LENGTH/2 , LENGTH/2)
+        y = rd.randrange(-WIDTH/2, WIDTH/2)
+        drawnGrass(LENGTH, x, y)
+
+def addTree(LENGTH, WIDTH, num = 5):
+    for i in range(num):
+        x = rd.randrange(-LENGTH/2 , LENGTH/2)
+        y = rd.randrange(-WIDTH/2 + WIDTH/20, WIDTH/2 - WIDTH/6)
+        LENGTH_1 = rd.randrange(LENGTH-LENGTH/2, LENGTH+LENGTH/2)
+        drawnTree_1(LENGTH_1, x, y)
+    for i in range(num):
+        x = rd.randrange(-LENGTH/2 , LENGTH/2)
+        y = rd.randrange(-WIDTH/2 + WIDTH/12, WIDTH/2 - WIDTH/6)
+        LENGTH_2 = rd.randrange(LENGTH-LENGTH/2, LENGTH+LENGTH/2)
+        drawnTree_2(LENGTH_2, x, y)
+    
+    # s = LENGTH/12
+    # drawnTree_2(LENGTH, 3*s, 0*s)
+    # drawnTree_2(LENGTH,-4.5*s, -2*s)
+    # drawnTree_2(LENGTH,-0.5*s, -0.5*s)
+    # drawnTree_2(LENGTH,1.5*s, -1*s)
+    # drawnTree_2(LENGTH,5*s, -2.5*s)
+
+    # drawnTree_1(LENGTH,3*s, 1.5*s)
+    # drawnTree_1(LENGTH,1*s, 1*s)
+    # drawnTree_1(LENGTH,-5.5*s, 1.5*s)
+    # drawnTree_1(LENGTH,5*s, 0)
+    # drawnTree_1(LENGTH,-2.75*s, -1*s)
+
+def createMap():
+    createScreen(LENGTH, WIDTH)
+    fillBoomRadom(LENGTH, WIDTH, boomList, 50)
+    createRoad(LENGTH)
+    addGrass(LENGTH, WIDTH, 100)
+    createLine(LENGTH, WIDTH)
+    addTree(LENGTH, WIDTH, 7)
+
+#create player and set up player
+COLORS = ['moccasin', 'violet', 'cyan', 'yellow', 'pink', 'firebrick', 'orange', 'purple', 'crimson', 'midnight blue']
+playersList = []
+
+def getNumberOfPlayers():
+    while True:
+        players = int(input("Enter number of players: "))
+        if 2 <= players <= len(COLORS):
+            return players
+        else:
+            print("Enter numer of players again:")
+
+def createPlayers(colors):
+    spacing = LENGTH / (len(colors)+1)
+    for i, color in enumerate(colors):
+        player = tt.Turtle()
+        player.color(color)
+        player.shape('turtle')
+        player.shapesize(1)
+        player.left(90)
+        player.up()
+        #set possition
+        player.setposition(-(LENGTH/2) +(i+1)*spacing, -(WIDTH/2)+(WIDTH/24))
+        player.down()
+        playersList.append(player)
+
+def move():
+    r = LENGTH/2400
+    while True:
+        for i, player in enumerate(playersList):
+            player.speed(1)
+            step = rd.randrange(1, 6)
+            turn = rd.randint(1,21)
+
+            player.fd(step)
+
+            xP, yP = player.pos()
+            randomTurning(turn, player, xP, yP)
+
+            for j, boom in enumerate(boomList):
+                if ((boom.x-15*r) <= xP <= (boom.x+15*r)) and ((boom.y-15*r) <= yP <= (boom.y+15*r)):
+                    end = tt.Turtle()
+                    end.pen(shown= False)
+                    end.up()
+                    end.speed(0)
+                    end.setpos(xP+50*r, yP-50*r)
+                    end.down()
+                    end.color("red")
+                    end.write("Boom\nXD", False, align= "center", font=('Arial', '10', 'normal'))
+                    boom.color("black")
+                    boom.shapesize(2*r)
+                    player.shape('arrow')
+                    playersList.pop(i)
+                    colors.pop(i)
+                    boomList.pop(j)
+                    break   
+
+            if yP >= WIDTH/2 - WIDTH/24:
+                return i
+            elif len(playersList)==0:
+                return -1
+
+def randomTurning(turn, obj, xP, yP):
+    if (turn == 10):
+        obj.left(20)
+    elif (turn == 20):
+        obj.right(20)
+    
+    if (xP <= -LENGTH/2):
+        obj.right(turn*2)
+    elif (xP >= LENGTH/2):
+        obj.left(turn*2)
+    
+    if yP <= -(WIDTH/2):
+        obj.left(180)
+
+def countDown():
+    tt.pen(shown= False)
+    tt.speed(0)
+    for i in range(3, 0, -1):
+        tt.write(i, False, align= "center", font=('Arial', '75', 'normal') )
+        time.sleep(1)
+        tt.undo()
+    tt.write("START", False, align= "center", font=('Arial', '50', 'normal') )
+    time.sleep(1)
+    tt.undo()
+
+numberOfPlayer = getNumberOfPlayers()
+rd.shuffle(COLORS)
+colors = COLORS[:numberOfPlayer]
+
+#build game
+createMap()
+createPlayers(colors)
+
+countDown()
+
+winner = move()
+
+if (winner == -1):
+    tt.write("NO ONE WIN", False, align= "center", font=('Arial', '50', 'normal'))
+else:
+    tt.write("The winner is: " + colors[winner], False, align= "center", font=('Arial', '50', 'normal'))
+
+tt.done()
